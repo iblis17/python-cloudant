@@ -15,41 +15,43 @@
 """
 API module for interacting with result collections.
 """
+from builtins import str
+
 import json
 import types
 
 from collections import Sequence
 from .errors import CloudantArgumentError
 
+NoneType = type(None)
+
 ARG_TYPES = {
     "descending": bool,
-    "endkey": (basestring, Sequence),
-    "endkey_docid": basestring,
+    "endkey": (str, Sequence),
+    "endkey_docid": str,
     "group": bool,
-    "group_level": basestring,
+    "group_level": str,
     "include_docs": bool,
     "inclusive_end": bool,
-    "key": (int, basestring, Sequence),
+    "key": (int, str, Sequence),
     "keys": list,
-    "limit": (int, types.NoneType),
+    "limit": (int, NoneType),
     "reduce": bool,
-    "skip": (int, types.NoneType),
-    "stale": basestring,
-    "startkey": (basestring, Sequence),
-    "startkey_docid": basestring,
+    "skip": (int, NoneType),
+    "stale": str,
+    "startkey": (str, Sequence),
+    "startkey_docid": str,
 }
 
 # pylint: disable=unnecessary-lambda
 TYPE_CONVERTERS = {
-    basestring: lambda x: json.dumps(x),
     str: lambda x: json.dumps(x),
-    unicode: lambda x: json.dumps(x),
     Sequence: lambda x: json.dumps(list(x)),
     list: lambda x: json.dumps(x),
     tuple: lambda x: json.dumps(list(x)),
     int: lambda x: x,
     bool: lambda x: 'true' if x else 'false',
-    types.NoneType: lambda x: x
+    NoneType: lambda x: x
 }
 
 def python_to_couch(options):
@@ -98,7 +100,7 @@ def python_to_couch(options):
 
 def type_or_none(typerefs, value):
     """
-    Provides a helper function to check that a value is of the types passed or 
+    Provides a helper function to check that a value is of the types passed or
     None.
     """
     return isinstance(value, typerefs) or value is None
@@ -178,7 +180,7 @@ class Result(object):
 
         :returns: Rows data in JSON format
         """
-        if isinstance(key, basestring):
+        if isinstance(key, str):
             data = self._ref(key=key, **self.options)
             return data['rows']
 
@@ -188,8 +190,8 @@ class Result(object):
 
         if isinstance(key, slice):
             # slice is startkey and endkey if str or array
-            str_or_none_start = type_or_none((basestring, list), key.start)
-            str_or_none_stop = type_or_none((basestring, list), key.stop)
+            str_or_none_start = type_or_none((str, list), key.start)
+            str_or_none_stop = type_or_none((str, list), key.stop)
             if str_or_none_start and str_or_none_stop:
                 # startkey/endkey
                 if key.start is not None and key.stop is not None:
