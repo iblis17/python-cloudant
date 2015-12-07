@@ -15,10 +15,11 @@
 """
 API module that maps to a Cloudant or CouchDB database instance.
 """
+from future.moves.urllib.parse import quote_plus as url_quote_plus
+
 import json
 import contextlib
 import posixpath
-import urllib
 from requests.exceptions import HTTPError
 
 from .document import Document
@@ -58,7 +59,7 @@ class CouchDatabase(dict):
         """
         return posixpath.join(
             self._database_host,
-            urllib.quote_plus(self.database_name)
+            url_quote_plus(self.database_name)
         )
 
     @property

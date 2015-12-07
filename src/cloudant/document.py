@@ -15,9 +15,9 @@
 """
 API module/class for interacting with a document in a database.
 """
+from future.moves.urllib.parse import quote_plus as url_quote_plus
 import json
 import posixpath
-import urllib
 import requests
 
 from requests.exceptions import HTTPError
@@ -78,7 +78,7 @@ class Document(dict):
             return None
         return posixpath.join(
             self._database_host,
-            urllib.quote_plus(self._database_name),
+            url_quote_plus(self._database_name),
             self._document_id
         )
 
