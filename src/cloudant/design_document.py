@@ -15,6 +15,7 @@
 """
 API module/class for interacting with a design document in a database.
 """
+from future.utils import iteritems
 from .document import Document
 from .views import View
 from .errors import CloudantArgumentError
@@ -108,7 +109,7 @@ class DesignDocument(Document):
         Note:  Other structures to follow...
         """
         super(DesignDocument, self).fetch()
-        for view_name, view_def in self.get('views', {}).iteritems():
+        for view_name, view_def in iteritems(self.get('views', {})):
             self['views'][view_name] = View(
                 self,
                 view_name,
@@ -143,7 +144,7 @@ class DesignDocument(Document):
 
         :returns: Iterable containing view name and associated View object
         """
-        for view_name, view in self.views.iteritems():
+        for view_name, view in iteritems(self.views):
             yield view_name, view
 
     def list_views(self):

@@ -16,6 +16,7 @@
 API module for interacting with result collections.
 """
 from builtins import str
+from future.utils import iteritems
 
 import json
 import types
@@ -69,7 +70,7 @@ def python_to_couch(options):
     :returns: Dictionary of translated CouchDB/Cloudant query parameters
     """
     translation = {}
-    for key, val in options.iteritems():
+    for key, val in iteritems(options):
         if key not in ARG_TYPES:
             msg = 'Invalid argument {0}'.format(key)
             raise CloudantArgumentError(msg)
