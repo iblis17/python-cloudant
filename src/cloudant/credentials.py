@@ -18,7 +18,7 @@ to allow users to pass credentials.
 """
 import os
 
-from configparser import ConfigParser
+from configparser import RawConfigParser
 
 
 def read_dot_couch(
@@ -79,7 +79,7 @@ def _read_dot_file(filename, section, username, password):
     :returns: A tuple containing user and password
     """
     config_file = os.path.expanduser(filename)
-    config = ConfigParser.RawConfigParser()
+    config = RawConfigParser()
     config.read(config_file)
     username_value = config.get(section, username)
     password_value = config.get(section, password)
