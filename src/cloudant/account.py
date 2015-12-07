@@ -233,7 +233,7 @@ class CouchDB(dict):
         :returns: List of database names
         """
         if not remote:
-            return super(CouchDB, self).keys()
+            return list(super(CouchDB, self).keys())
         return self.all_dbs()
 
     def __getitem__(self, key):

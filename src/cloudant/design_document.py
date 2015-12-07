@@ -153,7 +153,7 @@ class DesignDocument(Document):
 
         :returns: List of view names
         """
-        return self.views.keys()
+        return list(self.views.keys())
 
     def get_view(self, view_name):
         """

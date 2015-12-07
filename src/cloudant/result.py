@@ -161,7 +161,7 @@ class Result(object):
         self.options = options
         self._ref = method_ref
         self._page_size = options.pop("page_size", 100)
-        self._valid_args = ARG_TYPES.keys()
+        self._valid_args = list(ARG_TYPES.keys())
 
     def __getitem__(self, key):
         """

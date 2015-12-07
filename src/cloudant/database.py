@@ -428,7 +428,7 @@ class CouchDatabase(dict):
         :returns: List of document ids
         """
         if not remote:
-            return super(CouchDatabase, self).keys()
+            return list(super(CouchDatabase, self).keys())
         docs = self.all_docs()
         return [row['id'] for row in docs.get('rows', [])]
 
