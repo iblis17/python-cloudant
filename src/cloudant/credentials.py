@@ -17,7 +17,8 @@ Module providing utilities to support using an INI style configuration file
 to allow users to pass credentials.
 """
 import os
-import ConfigParser
+
+from configparser import ConfigParser
 
 
 def read_dot_couch(
